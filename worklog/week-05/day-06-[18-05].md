@@ -149,5 +149,5 @@
 [Tiến độ so với mục tiêu tuần]
 
 ---
-*Worklog created by: [Tên thực tập sinh]*  
+*Worklog created by: Nguyễn Thanh Tùng  
 *Next review: [Ngày review tiếp theo]*
