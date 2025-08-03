@@ -1,11 +1,11 @@
-# Worklog - Ngày [DD/MM/YYYY]
+# Worklog - Ngày DD/MM/2025
 
 ## 📅 Thông tin cơ bản
-- **Ngày**: [DD/MM/YYYY]
+- **Ngày**: DD/MM/2025
 - **Thứ**: [Thứ trong tuần]
-- **Tuần thực tập**: [Tuần thứ X/8]
+- **Tuần thực tập**: Tuần thứ /13
 - **Thời gian làm việc**: [8:00 - 17:00]
-- **Mood**: [😊/😐/😔] + [Lý do]
+- **Mood**: 😊
 
 ## 🎯 Mục tiêu ngày hôm nay
 - [ ] Mục tiêu 1: [Cụ thể, đo lường được]
@@ -149,5 +149,5 @@
 [Tiến độ so với mục tiêu tuần]
 
 ---
-*Worklog created by: Nguyễn Thanh Tùng  
-*Next review: [Ngày review tiếp theo]*
+Worklog created by: *Nguyễn Thanh Tùng*  
+Next review: [Ngày review tiếp theo]*
