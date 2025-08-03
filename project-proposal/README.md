@@ -1,462 +1,340 @@
-# 📊 Project Proposal Guidelines - FCJ Internship
+# Workshop: Kubernetes Multi-Cluster Management với Cluster API
 
-[![Documentation](https://img.shields.io/badge/Type-Documentation-blue)](https://github.com/AWS-First-Cloud-Journey/Internship)
-[![Weight](https://img.shields.io/badge/Weight-50%25-red)](https://github.com/AWS-First-Cloud-Journey/Internship)
-[![Required](https://img.shields.io/badge/Status-Required-red)](https://github.com/AWS-First-Cloud-Journey/Internship)
-
-## 🎯 Mục đích Project Proposal
-
-Project Proposal là **deliverable quan trọng nhất** (50% tổng điểm) trong chương trình FCJ Internship. Đây không chỉ là bài tập mà là cơ hội để:
-
-- **🏗️ Architecture Design**: Thiết kế giải pháp AWS cho bài toán thực tế
-- **💼 Business Analysis**: Phân tích business case và ROI
-- **📝 Technical Writing**: Phát triển kỹ năng viết kỹ thuật chuyên nghiệp
-- **🎯 Career Preparation**: Chuẩn bị cho việc làm việc với clients và stakeholders
-
----
-
-## ✅ Yêu cầu cơ bản
-
-### Scope và Chủ đề
-- **Focus**: AWS Cloud Solutions cho real-world problems
-- **Industries**: E-commerce, Healthcare, Education, FinTech, Media, etc.
-- **Complexity**: Intermediate level - không quá đơn giản, không quá phức tạp
-- **Innovation**: Có elements sáng tạo và modern practices
-
-### Độ dài và Format
-- **Length**: 15-25 trang (không tính appendices)
-- **Format**: Professional document với diagrams và charts
-- **Language**: Tiếng Việt hoặc tiếng Anh (consistent throughout)
-- **Structure**: 8 phần bắt buộc theo template
-
-### Chất lượng Content
-- **Technical Accuracy**: Thông tin kỹ thuật chính xác
-- **Business Viability**: Giải pháp khả thi về mặt business
-- **Cost Realistic**: Ước tính chi phí realistic và detailed
-- **Implementation Feasible**: Kế hoạch triển khai thực tế
-
----
-
-## 📋 8 Phần bắt buộc của Proposal
-
-### 1. 📄 Executive Summary (10%)
-**Mục đích**: Tóm tắt toàn bộ proposal trong 2-3 trang
-
-**Nội dung bao gồm**:
-- Problem statement ngắn gọn
-- Solution overview với key features
-- Business benefits và ROI summary
-- Investment required và timeline
-- Success metrics và expected outcomes
-
-**Evaluation Criteria**:
-- Clarity và conciseness
-- Compelling business case
-- Accurate summary của main points
-- Executive-level language
-
-### 2. 🎯 Problem Statement (15%)
-**Mục đích**: Định nghĩa rõ ràng vấn đề cần giải quyết
-
-**Nội dung bao gồm**:
-- Current situation analysis
-- Pain points identification với quantified impact
-- Stakeholders affected và their concerns
-- Business consequences của inaction
-- Market opportunity (nếu applicable)
-
-**Evaluation Criteria**:
-- Problem clearly defined và well-researched
-- Quantified impact với data/statistics
-- Stakeholder analysis comprehensive
-- Business case compelling
-
-### 3. 🏗️ Solution Architecture (25%)
-**Mục đích**: Thiết kế kiến trúc kỹ thuật chi tiết
-
-**Nội dung bao gồm**:
-- High-level architecture diagram
-- AWS services selection với justification
-- Component interactions và data flow
-- Security architecture và compliance
-- Scalability và performance considerations
-- Integration points với existing systems
-
-**Evaluation Criteria**:
-- Architecture technically sound
-- AWS services appropriately chosen
-- Security properly addressed
-- Scalability designed in
-- Diagrams clear và professional
-
-### 4. 🔧 Technical Implementation (20%)
-**Mục đích**: Chi tiết cách triển khai kỹ thuật
-
-**Nội dung bao gồm**:
-- Implementation phases với deliverables
-- Technical requirements (compute, storage, network)
-- Development approach và methodologies
-- Testing strategy (unit, integration, performance)
-- Deployment plan và rollback procedures
-- Configuration management
-
-**Evaluation Criteria**:
-- Implementation plan detailed và realistic
-- Technical requirements well-defined
-- Testing strategy comprehensive
-- Deployment approach sound
-- Risk mitigation considered
-
-### 5. 📅 Timeline & Milestones (10%)
-**Mục đích**: Lập kế hoạch thời gian chi tiết
-
-**Nội dung bao gồm**:
-- Project phases breakdown
-- Key milestones với success criteria
-- Dependencies identification
-- Critical path analysis
-- Resource allocation plan
-- Buffer time cho risks
-
-**Evaluation Criteria**:
-- Timeline realistic và achievable
-- Milestones clearly defined
-- Dependencies properly identified
-- Resource allocation logical
-- Contingency planning included
-
-### 6. 💰 Budget Estimation (10%)
-**Mục đích**: Ước tính chi phí chi tiết và chính xác
-
-**Nội dung bao gồm**:
-- AWS infrastructure costs (monthly/annual)
-- Development costs (one-time)
-- Third-party services và licenses
-- Operational costs (ongoing)
-- ROI calculation và break-even analysis
-- Cost optimization strategies
-
-**Evaluation Criteria**:
-- Cost estimates accurate và detailed
-- ROI calculation realistic
-- All cost categories covered
-- Optimization strategies included
-- Business case financially sound
-
-### 7. ⚠️ Risk Assessment (5%)
-**Mục đích**: Xác định và quản lý rủi ro dự án
-
-**Nội dung bao gồm**:
-- Risk identification (technical, business, operational)
-- Impact assessment và probability analysis
-- Risk matrix với prioritization
-- Mitigation strategies cho each risk
-- Contingency plans
-- Monitoring và escalation procedures
-
-**Evaluation Criteria**:
-- Risks comprehensively identified
-- Impact assessment realistic
-- Mitigation strategies practical
-- Contingency plans detailed
-- Risk monitoring planned
-
-### 8. 🎯 Expected Outcomes (5%)
-**Mục đích**: Định nghĩa success và benefits mong đợi
-
-**Nội dung bao gồm**:
-- Success metrics (technical và business)
-- Short-term benefits (0-6 months)
-- Medium-term benefits (6-18 months)
-- Long-term value (18+ months)
-- User experience improvements
-- Strategic capabilities gained
-
-**Evaluation Criteria**:
-- Success metrics measurable
-- Benefits realistic và quantified
-- Timeline for benefits reasonable
-- Strategic value articulated
-- User impact considered
-
----
-
-## 🎨 Template Structure
-
-```markdown
-# [Project Title]
-## [Subtitle describing the solution]
+## Giải pháp Quản lý Đa cụm Kubernetes Hiệu quả và An toàn
 
 ---
 
 # Executive Summary
-[2-3 pages summarizing the entire proposal]
+
+Workshop này hướng dẫn các lập trình viên và kỹ sư DevOps triển khai và quản lý đa cụm Kubernetes sử dụng **Cluster API** (CAPI), tập trung vào tự động hóa vòng đời cụm, giao tiếp liên cụm, phân phối khối lượng công việc, quản trị (governance), và bảo mật. Nội dung bao gồm việc sử dụng Cluster API để tự động hóa việc tạo, nâng cấp, và xóa cụm Kubernetes, thiết lập mạng liên cụm với **Cilium Cluster Mesh**, quản lý khối lượng công việc với **Karmada**, và áp dụng các chính sách bảo mật với **Kyverno**. Workshop tận dụng các dịch vụ AWS để triển khai giải pháp có khả năng mở rộng, an toàn và tối ưu chi phí.
+
+**Tổng quan giải pháp:**
+
+- **Cluster API**: Tự động hóa vòng đời cụm Kubernetes trên AWS (EKS).
+- **Cilium Cluster Mesh**: Kết nối mạng liên cụm, đảm bảo giao tiếp an toàn.
+- **Karmada**: Phân phối và quản lý khối lượng công việc trên nhiều cụm.
+- **Kyverno**: Thực thi chính sách bảo mật và quản trị.
+- **AWS EKS**: Cung cấp cụm Kubernetes được quản lý.
+
+**Lợi ích:**
+
+- Giảm 70% thời gian quản lý cụm so với phương pháp thủ công.
+- Tăng cường bảo mật với chính sách zero-trust và kiểm tra tuân thủ.
+- Tối ưu chi phí thông qua sử dụng AWS Free Tier và quản lý tài nguyên hiệu quả.
+- Nâng cao kỹ năng quản lý đa cụm Kubernetes và DevOps.
+
+**Chi phí dự kiến:**
+
+- **Hạ tầng AWS**: Gần như miễn phí trong Free Tier (EKS, EC2 `t3.medium`, S3).
+- **Thời gian**: Workshop kéo dài một ngày với các bài thực hành.
+
+**Kết quả mong đợi:**
+
+- Người tham gia triển khai thành công cụm Kubernetes với Cluster API.
+- Thiết lập giao tiếp liên cụm và phân phối khối lượng công việc.
+- Áp dụng chính sách bảo mật và quản trị.
+- Nắm vững kỹ năng quản lý đa cụm Kubernetes trên AWS.
+
+---
 
 # 1. Problem Statement
+
 ## Current Situation
+
+Quản lý đa cụm Kubernetes là một thách thức lớn đối với các tổ chức muốn triển khai ứng dụng phân tán trên quy mô lớn. Các phương pháp quản lý thủ công phức tạp, tốn thời gian, và dễ gây ra lỗi cấu hình. Cluster API cung cấp giải pháp tự động hóa vòng đời cụm, nhưng việc tích hợp với mạng liên cụm, phân phối khối lượng công việc, và áp dụng chính sách bảo mật đòi hỏi kiến thức chuyên sâu mà nhiều đội ngũ DevOps còn thiếu.
+
 ## Key Challenges
+
+- **Quản lý vòng đời cụm**: Tạo, nâng cấp, và xóa cụm Kubernetes thủ công mất nhiều thời gian.
+- **Giao tiếp liên cụm**: Thiết lập mạng an toàn giữa các cụm là phức tạp.
+- **Phân phối khối lượng công việc**: Đảm bảo tài nguyên được sử dụng hiệu quả trên các cụm.
+- **Bảo mật và quản trị**: Thiếu các chính sách bảo mật và tuân thủ thống nhất.
+- **Tối ưu chi phí**: Quản lý tài nguyên trên đa cụm để giảm chi phí.
+
 ## Stakeholder Impact
+
+- **Lập trình viên**: Cần hướng dẫn để triển khai và quản lý cụm Kubernetes.
+- **Kỹ sư DevOps**: Yêu cầu kiến thức về Cluster API, mạng liên cụm, và bảo mật.
+- **Doanh nghiệp**: Mong muốn giải pháp đa cụm có khả năng mở rộng, an toàn, và tiết kiệm chi phí.
+
 ## Business Consequences
 
+Nếu không thành thạo quản lý đa cụm Kubernetes:
+
+- Tốn nhiều thời gian và chi phí cho quản lý hạ tầng.
+- Khó đảm bảo tính sẵn sàng cao và khả năng mở rộng.
+- Rủi ro bảo mật tăng do thiếu chính sách quản trị.
+- Doanh nghiệp bỏ lỡ cơ hội áp dụng chiến lược cloud-native.
+
+---
+
 # 2. Solution Architecture
+
 ## Architecture Overview
+
+Workshop hướng dẫn triển khai đa cụm Kubernetes theo kiến trúc sau:
+
+- **Cluster API**: Tự động hóa vòng đời cụm trên AWS EKS.
+- **Cilium Cluster Mesh**: Cung cấp mạng liên cụm với chính sách zero-trust.
+- **Karmada**: Quản lý và phân phối khối lượng công việc trên các cụm.
+- **Kyverno**: Áp dụng chính sách bảo mật và quản trị.
+- **AWS EKS**: Chạy các cụm Kubernetes được quản lý.
+- **AWS S3**: Lưu trữ cấu hình và trạng thái Cluster API.
+
 ## AWS Services Used
+
+- **EKS**: Cung cấp cụm Kubernetes được quản lý, tận dụng Free Tier.
+- **EC2**: Chạy management cluster cho Cluster API (`t3.medium`).
+- **S3**: Lưu trữ cấu hình Cluster API và backup trạng thái.
+- **VPC**: Đảm bảo mạng an toàn với các subnet công khai và riêng tư.
+- **IAM**: Quản lý quyền truy cập cho Cluster API và EKS.
+
 ## Component Design
+
+- **Management Cluster**: Chạy Cluster API để quản lý các workload clusters.
+- **Workload Clusters**: Chạy ứng dụng (ví dụ: API REST) trên EKS.
+- **Cilium Cluster Mesh**: Kết nối mạng liên cụm, hỗ trợ mTLS.
+- **Karmada**: Đồng bộ tài nguyên (Deployments, Services) trên các cụm.
+- **Kyverno**: Thực thi chính sách (ví dụ: yêu cầu namespace, giới hạn tài nguyên).
+- **S3**: Lưu trữ cấu hình Cluster API và backup.
+
 ## Security Architecture
+
+- **Security Groups**:
+  - `eks-sg`: Mở cổng 443 (API Server), 6443 (Cluster API), 22 (SSH, giới hạn IP).
+  - `management-sg`: Giới hạn truy cập từ management cluster.
+- **IAM Roles**:
+  - `EKSClusterRole`: Quyền quản lý EKS.
+  - `CAPIRole`: Quyền truy cập S3 và EKS cho Cluster API.
+- **Kyverno Policies**:
+  - Yêu cầu namespace cho tài nguyên.
+  - Giới hạn tài nguyên CPU/memory.
+  - Kiểm tra image từ registry đáng tin cậy.
+- **Cilium Network Policies**: Áp dụng zero-trust, kiểm soát lưu lượng liên cụm.
+
 ## Scalability Design
 
+- **Multi-Cluster**: Cluster API hỗ trợ tạo thêm cụm theo nhu cầu.
+- **Karmada**: Phân phối workload thông minh dựa trên tài nguyên.
+- **EKS Auto Scaling**: Mở rộng node theo lưu lượng.
+- **Multi-AZ**: EKS và S3 hỗ trợ Multi-AZ, đảm bảo uptime 99.9%.
+
+## Architecture Diagram
+
+- **Internet Gateway** -> **EKS Management Cluster (Cluster API)** -> **EKS Workload Clusters**.
+- **Cilium Cluster Mesh**: Kết nối mạng giữa các cụm.
+- **Karmada**: Đồng bộ workload.
+- **S3**: Lưu trữ cấu hình.
+- **Kyverno**: Áp dụng chính sách bảo mật.
+
+---
+
 # 3. Technical Implementation
+
 ## Implementation Phases
+
+Workshop được chia thành các mô-đun thực hành trong một ngày:
+
+1. **Chuẩn bị hạ tầng**:
+   - Tạo VPC, Security Groups, IAM Roles, và S3 bucket.
+   - Cài đặt AWS CLI, kubectl, clusterctl, và Helm trên máy cục bộ.
+
+2. **Triển khai Management Cluster**:
+   - Khởi chạy EKS management cluster (`t3.medium`).
+   - Cài đặt Cluster API và các provider (AWS, CAPI).
+
+3. **Tạo Workload Clusters**:
+   - Sử dụng Cluster API để tạo 2 workload clusters trên EKS.
+   - Cấu hình Cilium Cluster Mesh cho giao tiếp liên cụm.
+
+4. **Phân phối Workload**:
+   - Cài đặt Karmada trên management cluster.
+   - Triển khai ứng dụng mẫu (API REST) trên các workload clusters.
+
+5. **Bảo mật và Quản trị**:
+   - Cài đặt Kyverno và áp dụng chính sách bảo mật.
+   - Kiểm tra tuân thủ và giám sát.
+
+6. **Kiểm tra và Xử lý sự cố**:
+   - Kiểm tra giao tiếp liên cụm và workload phân phối.
+   - Giám sát log và xử lý lỗi.
+
 ## Technical Requirements
+
+- **Tính toán**: EKS cluster (`t3.medium`, 2 vCPU, 4 GB RAM).
+- **Lưu trữ**: S3 1 GB, EBS 20 GB cho mỗi node.
+- **Mạng**: VPC với 2 subnet công khai (management cluster), 2 subnet riêng (workload clusters).
+- **Phần mềm**: Cluster API, Cilium, Karmada, Kyverno, AWS CLI, kubectl, Helm.
+
 ## Development Approach
+
+- **Phương pháp**: Hướng dẫn từng bước với các bài tập thực hành.
+- **Công cụ**: AWS Management Console, clusterctl, Helm, kubectl, Visual Studio Code.
+
 ## Testing Strategy
+
+- **Unit Tests**: Kiểm tra cấu hình Cluster API bằng clusterctl.
+- **Integration Tests**: Xác minh giao tiếp liên cụm với Cilium.
+- **Performance Tests**: Kiểm tra thời gian phản hồi API < 200ms với k6.
+- **Security Tests**: Kiểm tra chính sách Kyverno và quét lỗ hổng image.
+
 ## Deployment Plan
 
+1. Cài đặt Cluster API và provider AWS trên management cluster.
+2. Tạo workload clusters với clusterctl.
+3. Cài đặt Cilium Cluster Mesh và Karmada.
+4. Áp dụng chính sách Kyverno.
+5. Triển khai ứng dụng mẫu và kiểm tra API.
+
+## Rollback Procedures
+
+- Nếu triển khai thất bại:
+  - Xóa workload cluster: `clusterctl delete`.
+  - Khôi phục từ S3 backup: `aws s3 cp`.
+  - Tái tạo management cluster từ AMI backup.
+
+---
+
 # 4. Timeline & Milestones
+
 ## Project Timeline
+
+- **Thời gian**: 1 ngày
+- **Buổi sáng**:
+  - Giới thiệu và chuẩn bị hạ tầng
+  - Triển khai management cluster
+  - Tạo workload clusters
+- **Buổi chiều**:
+  - Cấu hình Cilium Cluster Mesh và Karmada
+  - Áp dụng chính sách Kyverno
+  - Kiểm tra và tổng kết
+
 ## Key Milestones
+
+1. VPC, Security Groups, và IAM Roles được cấu hình.
+2. Management cluster chạy Cluster API.
+3. Workload clusters được tạo và kết nối qua Cilium.
+4. Karmada phân phối workload thành công.
+5. Kyverno áp dụng chính sách bảo mật.
+
 ## Dependencies
-## Resource Allocation
+
+- Tài khoản AWS và cặp khóa SSH được chuẩn bị trước.
+- S3 bucket phải được tạo trước khi triển khai Cluster API.
+- EKS management cluster phải sẵn sàng trước khi tạo workload clusters.
+- Security Groups phải được cấu hình đúng.
+
+## Buffer Time
+
+- 30 phút dự phòng cho các vấn đề như lỗi cấu hình hoặc kết nối.
+
+---
 
 # 5. Budget Estimation
+
 ## Infrastructure Costs
-## Development Costs
+
+- **EKS**: $0.10/giờ x 24 giờ x 30 ngày = $72/tháng (Free Tier: 750 giờ EC2).
+- **EC2 (`t3.medium`)**: $0.0416/giờ x 24 giờ x 30 ngày = $29.95/tháng (Free Tier: 750 giờ).
+- **S3**: Miễn phí trong Free Tier (5 GB).
+- **Tổng**: ~$101.95/tháng, nhưng gần như miễn phí trong Free Tier cho workshop.
+
 ## Operational Costs
+
+- Quản lý và hỗ trợ: Không đáng kể trong Free Tier.
+
 ## ROI Analysis
 
+- **Lợi ích**:
+  - Giảm 70% thời gian quản lý cụm (3 giờ so với 10 giờ).
+  - Tiết kiệm ~60% chi phí so với on-premises ($20K/năm so với $50K/năm).
+  - Nâng cao kỹ năng quản lý đa cụm, tăng khả năng cạnh tranh.
+- **Hoàn vốn**: Kỹ năng học được giúp tối ưu hóa hạ tầng và giảm chi phí trong các dự án thực tế.
+
+---
+
 # 6. Risk Assessment
+
 ## Risk Matrix
+
+| **Rủi ro** | **Tác động** | **Xác suất** | **Giảm thiểu** |
+| --- | --- | --- | --- |
+| Management cluster lỗi | Cao | Thấp | Kiểm tra cấu hình clusterctl, sử dụng AMI backup |
+| Giao tiếp liên cụm thất bại | Cao | Thấp | Kiểm tra Cilium Cluster Mesh, Security Groups |
+| Lỗi chính sách Kyverno | Trung bình | Trung bình | Kiểm tra policy trước khi áp dụng |
+| Thiếu thời gian | Trung bình | Trung bình | Lịch trình linh hoạt, tài liệu bổ sung |
+
 ## Mitigation Strategies
+
+- **Management cluster lỗi**: Sử dụng clusterctl validate và S3 backup.
+- **Giao tiếp liên cụm thất bại**: Kiểm tra Security Groups và Cilium policies.
+- **Lỗi chính sách Kyverno**: Áp dụng policy trong môi trường thử nghiệm trước.
+- **Thiếu thời gian**: Cung cấp tài liệu tự học và video hướng dẫn.
+
 ## Contingency Plans
 
+- **Management Cluster**: Khôi phục từ AMI backup.
+- **Workload Clusters**: Xóa và tái tạo với clusterctl.
+- **Cilium/Karmada**: Sử dụng cấu hình mẫu từ tài liệu chính thức.
+- **Thời gian**: Tài liệu bổ sung cho các chủ đề nâng cao.
+
+---
+
 # 7. Expected Outcomes
+
 ## Success Metrics
+
+- Người tham gia triển khai thành công management cluster và workload clusters.
+- Giao tiếp liên cụm hoạt động ổn định với Cilium Cluster Mesh.
+- Karmada phân phối workload hiệu quả, API phản hồi dưới 200ms.
+- Kyverno áp dụng chính sách bảo mật thành công.
+
 ## Business Benefits
+
+- **Ngắn hạn (0-6 tháng)**: Tự động hóa quản lý cụm, giảm lỗi cấu hình.
+- **Trung hạn (6-18 tháng)**: Tiết kiệm chi phí, hỗ trợ mở rộng với EKS.
+- **Dài hạn (18+ tháng)**: Tăng khả năng cạnh tranh với chiến lược multi-cluster.
+
 ## Technical Improvements
+
+- Thành thạo Cluster API, Cilium, Karmada, và Kyverno.
+- Hiểu cách quản lý đa cụm Kubernetes trên AWS.
+- Áp dụng các phương pháp bảo mật và tối ưu hóa chi phí.
+
 ## Long-term Value
+
+- Người tham gia áp dụng kỹ năng vào các dự án cloud-native.
+- Doanh nghiệp hưởng lợi từ hệ thống đa cụm đáng tin cậy, chi phí thấp.
 
 ---
 
 # Appendices
+
 ## A. Technical Specifications
+
+- **EKS**: Kubernetes 1.31, `t3.medium` nodes.
+- **S3**: Bucket `cluster-api-config`, 1 GB.
+- **Cluster API**: Phiên bản mới nhất, provider AWS.
+- **Cilium**: Cluster Mesh, phiên bản mới nhất.
+- **Karmada**: Phiên bản mới nhất.
+- **Kyverno**: Phiên bản mới nhất.
+
 ## B. Cost Calculations
+
+- **EKS**: $72/tháng (Free Tier: 750 giờ EC2).
+- **EC2**: $29.95/tháng (Free Tier: 750 giờ).
+- **S3**: Miễn phí trong Free Tier (5 GB).
+- **Chuẩn bị workshop**: $500 (one-time).
+
 ## C. Architecture Diagrams
+
+![architecture-diagram](./architecture-diagram.png)
+
 ## D. References
-```
 
----
-
-## 💡 Chọn chủ đề Project
-
-### Recommended Industries
-
-#### 🛒 E-Commerce & Retail
-- **Multi-vendor marketplace** với microservices
-- **Omnichannel retail platform** với inventory management
-- **Personalized recommendation engine** với ML
-- **Supply chain optimization** với IoT và analytics
-
-#### 🏥 Healthcare & Life Sciences
-- **Telemedicine platform** với video conferencing
-- **Electronic Health Records (EHR)** system
-- **Medical imaging processing** với AI/ML
-- **Drug discovery platform** với HPC
-
-#### 🎓 Education & E-Learning
-- **Learning Management System (LMS)** với scalability
-- **Virtual classroom platform** với real-time collaboration
-- **Student performance analytics** với data lake
-- **Content delivery network** cho educational content
-
-#### 💰 FinTech & Banking
-- **Digital banking platform** với security focus
-- **Payment processing system** với fraud detection
-- **Robo-advisor platform** với ML algorithms
-- **Blockchain-based solutions** cho transparency
-
-#### 📱 Media & Entertainment
-- **Video streaming platform** với global CDN
-- **Social media analytics** với big data
-- **Gaming backend infrastructure** với real-time features
-- **Content management system** với AI moderation
-
-#### 🏭 Manufacturing & IoT
-- **Smart factory monitoring** với IoT sensors
-- **Predictive maintenance** với ML models
-- **Supply chain visibility** với blockchain
-- **Quality control automation** với computer vision
-
-### Project Complexity Levels
-
-#### ⭐ Beginner-Friendly (Not Recommended)
-- Simple CRUD applications
-- Basic static websites
-- Single-service solutions
-
-#### ⭐⭐ Intermediate (Recommended)
-- Multi-tier applications với 3-5 AWS services
-- Microservices architecture với API Gateway
-- Data processing pipelines
-- ML-powered applications
-
-#### ⭐⭐⭐ Advanced (For Experienced)
-- Complex distributed systems
-- Multi-region deployments
-- Advanced ML/AI implementations
-- Enterprise-grade solutions
-
----
-
-## 🔧 Tools và Resources
-
-### Architecture Design
-- **Draw.io**: Free diagramming tool
-- **Lucidchart**: Professional diagramming
-- **AWS Architecture Icons**: Official AWS icons
-- **Cloudcraft**: AWS architecture visualization
-
-### Cost Estimation
-- **AWS Pricing Calculator**: Official cost estimation
-- **AWS Cost Explorer**: Historical cost analysis
-- **Infracost**: Infrastructure cost estimation
-- **CloudHealth**: Cost optimization tools
-
-### Documentation
-- **Notion**: All-in-one workspace
-- **Confluence**: Team documentation
-- **GitBook**: Beautiful documentation
-- **Markdown**: Simple formatting
-
-### Research Tools
-- **AWS Case Studies**: Real customer implementations
-- **AWS Whitepapers**: Best practices và patterns
-- **Gartner Reports**: Industry analysis
-- **Stack Overflow**: Technical Q&A
-
----
-
-## 📊 Evaluation Rubric
-
-### Technical Excellence (40%)
-| Criteria | Excellent (90-100%) | Good (80-89%) | Satisfactory (70-79%) | Needs Improvement (<70%) |
-|----------|-------------------|---------------|---------------------|------------------------|
-| **Architecture Design** | Innovative, scalable, secure | Well-designed, follows best practices | Functional, meets requirements | Basic, has significant gaps |
-| **AWS Services Selection** | Optimal choices, well-justified | Good choices, mostly appropriate | Adequate choices, some issues | Poor choices, not justified |
-| **Technical Depth** | Deep understanding evident | Good technical knowledge | Basic understanding | Superficial treatment |
-
-### Business Viability (30%)
-| Criteria | Excellent (90-100%) | Good (80-89%) | Satisfactory (70-79%) | Needs Improvement (<70%) |
-|----------|-------------------|---------------|---------------------|------------------------|
-| **Problem Definition** | Clear, compelling, well-researched | Well-defined, good research | Adequately defined | Vague, poorly researched |
-| **Business Case** | Strong ROI, compelling benefits | Good business case | Adequate justification | Weak business case |
-| **Market Understanding** | Deep market insight | Good market knowledge | Basic understanding | Limited market awareness |
-
-### Implementation Feasibility (20%)
-| Criteria | Excellent (90-100%) | Good (80-89%) | Satisfactory (70-79%) | Needs Improvement (<70%) |
-|----------|-------------------|---------------|---------------------|------------------------|
-| **Timeline** | Realistic, well-planned | Mostly realistic | Somewhat optimistic | Unrealistic |
-| **Resource Planning** | Comprehensive, detailed | Well-planned | Basic planning | Poor planning |
-| **Risk Management** | Thorough risk analysis | Good risk identification | Basic risk assessment | Inadequate risk planning |
-
-### Presentation Quality (10%)
-| Criteria | Excellent (90-100%) | Good (80-89%) | Satisfactory (70-79%) | Needs Improvement (<70%) |
-|----------|-------------------|---------------|---------------------|------------------------|
-| **Writing Quality** | Professional, clear, engaging | Well-written, clear | Adequate writing | Poor writing quality |
-| **Visual Design** | Professional diagrams, charts | Good visuals | Basic visuals | Poor or missing visuals |
-| **Organization** | Logical flow, easy to follow | Well-organized | Adequately organized | Poor organization |
-
----
-
-## 🎯 Success Tips
-
-### 1. Start with Real Problems
-```markdown
-❌ "Build a website for a company"
-✅ "Modernize legacy e-commerce platform to handle 10x traffic growth 
-   during peak seasons while reducing operational costs by 40%"
-```
-
-### 2. Quantify Everything
-```markdown
-❌ "Improve performance"
-✅ "Reduce page load time from 3.2s to <500ms, increase conversion 
-   rate by 25%, handle 50,000 concurrent users"
-```
-
-### 3. Show Your Research
-```markdown
-✅ "According to Gartner 2024 report, 85% of enterprises will adopt 
-   cloud-first strategy by 2025. Current solution costs $50K/month 
-   vs proposed AWS solution at $18K/month (64% reduction)"
-```
-
-### 4. Think Like a Consultant
-- **Client Perspective**: What would a real client care about?
-- **Business Impact**: How does this solve business problems?
-- **Competitive Advantage**: What makes this solution unique?
-- **Scalability**: How does this grow with the business?
-
-### 5. Use Real Data
-- **Market Research**: Industry reports, competitor analysis
-- **AWS Pricing**: Actual pricing from AWS Calculator
-- **Performance Benchmarks**: Real performance metrics
-- **Case Studies**: Similar implementations
-
----
-
-## 📚 Learning Resources
-
-### AWS Architecture
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [AWS Architecture Center](https://aws.amazon.com/architecture/)
-- [AWS Solutions Library](https://aws.amazon.com/solutions/)
-- [AWS Reference Architectures](https://aws.amazon.com/architecture/reference-architecture-diagrams/)
-
-### Business Analysis
-- [Harvard Business Review](https://hbr.org/)
-- [McKinsey Insights](https://www.mckinsey.com/insights)
-- [Gartner Research](https://www.gartner.com/en/research)
-- [Forrester Research](https://www.forrester.com/research/)
-
-### Technical Writing
-- [Google Technical Writing Courses](https://developers.google.com/tech-writing)
-- [AWS Documentation Style Guide](https://docs.aws.amazon.com/style-guide/)
-- [Microsoft Writing Style Guide](https://docs.microsoft.com/en-us/style-guide/)
-
-### Industry Reports
-- [AWS Customer Case Studies](https://aws.amazon.com/solutions/case-studies/)
-- [Cloud Computing Market Reports](https://www.marketsandmarkets.com/Market-Reports/cloud-computing-market-234.html)
-- [Digital Transformation Studies](https://www.idc.com/research/digital-transformation)
-
----
-
-## 🤝 Review Process
-
-### Self-Review Checklist
-- [ ] **Completeness**: All 8 sections completed thoroughly
-- [ ] **Technical Accuracy**: All technical details verified
-- [ ] **Business Viability**: ROI calculation realistic
-- [ ] **Implementation Feasibility**: Timeline và resources realistic
-- [ ] **Professional Quality**: Writing và visuals professional-grade
-
-### Peer Review Process
-1. **Exchange**: Swap proposals với 1-2 peers
-2. **Review**: Provide detailed feedback using rubric
-3. **Discuss**: 30-minute discussion session
-4. **Iterate**: Incorporate feedback và improve
-
-### Mentor Review
-1. **Initial Submission**: Submit draft for initial feedback
-2. **Feedback Session**: 1-hour review meeting
-3. **Revision**: Address feedback và resubmit
-4. **Final Review**: Final approval meeting
-
----
-
----
-
-**🎯 Remember**: Your proposal should demonstrate not just technical knowledge, but also business acumen và strategic thinking. This is your opportunity to showcase your potential as a future cloud architect và business consultant!
-
----
-
-*Hướng dẫn này sẽ giúp bạn tạo ra một project proposal chất lượng cao, thể hiện được khả năng technical và business analysis của một cloud professional.*
+- Cluster API Documentation.
+- Cilium Cluster Mesh Documentation.
+- Karmada Documentation.
+- Kyverno Documentation.
+- AWS EKS Documentation.
+- Gartner 2025 Cloud-Native Report.
