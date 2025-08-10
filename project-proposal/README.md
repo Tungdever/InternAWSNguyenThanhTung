@@ -1,39 +1,33 @@
+
 # Workshop: Kubernetes Multi-Cluster Management với Cluster API
 
-## Giải pháp Quản lý Đa cụm Kubernetes Hiệu quả và An toàn
+## Executive Summary
 
----
-
-# Executive Summary
-
-Workshop này hướng dẫn các lập trình viên và kỹ sư DevOps triển khai và quản lý đa cụm Kubernetes sử dụng **Cluster API** (CAPI), tập trung vào tự động hóa vòng đời cụm, giao tiếp liên cụm, phân phối khối lượng công việc, quản trị (governance), và bảo mật. Nội dung bao gồm việc sử dụng Cluster API để tự động hóa việc tạo, nâng cấp, và xóa cụm Kubernetes, thiết lập mạng liên cụm với **Cilium Cluster Mesh**, quản lý khối lượng công việc với **Karmada**, và áp dụng các chính sách bảo mật với **Kyverno**. Workshop tận dụng các dịch vụ AWS để triển khai giải pháp có khả năng mở rộng, an toàn và tối ưu chi phí.
+Workshop này hướng dẫn triển khai và quản lý đa cụm Kubernetes sử dụng **Cluster API** (CAPI), tập trung vào tự động hóa vòng đời cụm và triển khai GitOps với Argo CD. Cluster API giúp tự động hóa việc tạo, nâng cấp, và xóa cụm Kubernetes. Argo CD đảm bảo triển khai ứng dụng nhất quán và có thể kiểm tra được thông qua Git.
 
 **Tổng quan giải pháp:**
 
 - **Cluster API**: Tự động hóa vòng đời cụm Kubernetes trên AWS (EKS).
-- **Cilium Cluster Mesh**: Kết nối mạng liên cụm, đảm bảo giao tiếp an toàn.
-- **Karmada**: Phân phối và quản lý khối lượng công việc trên nhiều cụm.
-- **Kyverno**: Thực thi chính sách bảo mật và quản trị.
+- **Argo CD**: Triển khai ứng dụng theo GitOps.
 - **AWS EKS**: Cung cấp cụm Kubernetes được quản lý.
 
 **Lợi ích:**
 
-- Giảm 70% thời gian quản lý cụm so với phương pháp thủ công.
-- Tăng cường bảo mật với chính sách zero-trust và kiểm tra tuân thủ.
-- Tối ưu chi phí thông qua sử dụng AWS Free Tier và quản lý tài nguyên hiệu quả.
+- Giảm thời gian quản lý cụm so với phương pháp thủ công.
+- Tăng cường tính nhất quán và kiểm soát triển khai ứng dụng.
 - Nâng cao kỹ năng quản lý đa cụm Kubernetes và DevOps.
 
 **Chi phí dự kiến:**
-
-- **Hạ tầng AWS**: Gần như miễn phí trong Free Tier (EKS, EC2 `t3.medium`, S3).
-- **Thời gian**: Workshop kéo dài một ngày với các bài thực hành.
+- **Hạ tầng AWS**: $1.25
+- **Thời gian**: 3h.
 
 **Kết quả mong đợi:**
 
-- Người tham gia triển khai thành công cụm Kubernetes với Cluster API.
-- Thiết lập giao tiếp liên cụm và phân phối khối lượng công việc.
-- Áp dụng chính sách bảo mật và quản trị.
-- Nắm vững kỹ năng quản lý đa cụm Kubernetes trên AWS.
+- Hiểu rõ cách sử dụng Cluster API để quản lý cụm Kubernetes.
+- Thành thạo triển khai GitOps với Argo CD.
+- Biết cách cấu hình autoscaling cho EC2 và EKS.
+- Quản lý kubeconfig và truy cập cụm từ cụm quản lý.
+- Áp dụng quy trình CI/CD cho hạ tầng Kubernetes.
 
 ---
 
@@ -41,30 +35,31 @@ Workshop này hướng dẫn các lập trình viên và kỹ sư DevOps triển
 
 ## Current Situation
 
-Quản lý đa cụm Kubernetes là một thách thức lớn đối với các tổ chức muốn triển khai ứng dụng phân tán trên quy mô lớn. Các phương pháp quản lý thủ công phức tạp, tốn thời gian, và dễ gây ra lỗi cấu hình. Cluster API cung cấp giải pháp tự động hóa vòng đời cụm, nhưng việc tích hợp với mạng liên cụm, phân phối khối lượng công việc, và áp dụng chính sách bảo mật đòi hỏi kiến thức chuyên sâu mà nhiều đội ngũ DevOps còn thiếu.
+Việc triển khai và quản lý đa cụm Kubernetes đang trở thành nhu cầu thiết yếu trong các tổ chức hiện đại, đặc biệt khi ứng dụng được phân phối trên nhiều vùng địa lý hoặc môi trường khác nhau. Tuy nhiên, các phương pháp quản lý thủ công thường phức tạp, tốn thời gian, dễ xảy ra lỗi cấu hình, và khó mở rộng.
+
+Cluster API cung cấp một cách tiếp cận tự động hóa vòng đời cụm Kubernetes thông qua các manifest khai báo. Khi kết hợp với Argo CD, các cụm và ứng dụng có thể được triển khai nhất quán, kiểm soát được, và dễ dàng rollback thông qua GitOps.
 
 ## Key Challenges
 
-- **Quản lý vòng đời cụm**: Tạo, nâng cấp, và xóa cụm Kubernetes thủ công mất nhiều thời gian.
-- **Giao tiếp liên cụm**: Thiết lập mạng an toàn giữa các cụm là phức tạp.
-- **Phân phối khối lượng công việc**: Đảm bảo tài nguyên được sử dụng hiệu quả trên các cụm.
-- **Bảo mật và quản trị**: Thiếu các chính sách bảo mật và tuân thủ thống nhất.
-- **Tối ưu chi phí**: Quản lý tài nguyên trên đa cụm để giảm chi phí.
+- **Quản lý vòng đời cụm**: Việc tạo, nâng cấp, và xóa cụm Kubernetes thủ công mất nhiều thời gian và dễ sai sót.
+- **Thiếu tự động hóa triển khai**: Không có quy trình GitOps rõ ràng dẫn đến cấu hình không nhất quán.
+- **Khó mở rộng**: Việc mở rộng cụm theo nhu cầu thực tế đòi hỏi thao tác thủ công và thiếu khả năng tự điều chỉnh.
+- **Giám sát và rollback hạn chế**: Không có hệ thống theo dõi trạng thái cụm và ứng dụng một cách tập trung.
+- **Chi phí vận hành cao**: Thiếu tối ưu tài nguyên dẫn đến lãng phí chi phí.
 
 ## Stakeholder Impact
 
-- **Lập trình viên**: Cần hướng dẫn để triển khai và quản lý cụm Kubernetes.
-- **Kỹ sư DevOps**: Yêu cầu kiến thức về Cluster API, mạng liên cụm, và bảo mật.
-- **Doanh nghiệp**: Mong muốn giải pháp đa cụm có khả năng mở rộng, an toàn, và tiết kiệm chi phí.
+- **Lập trình viên**: Gặp khó khăn khi triển khai ứng dụng trên nhiều cụm với cấu hình khác nhau.
+- **Kỹ sư DevOps**: Thiếu công cụ để tự động hóa và giám sát cụm một cách hiệu quả.
+- **Quản lý CNTT**: Lo ngại về chi phí, bảo mật, và khả năng kiểm soát hệ thống phân tán.
+- **Doanh nghiệp**: Rủi ro về hiệu suất, bảo mật và chi phí nếu không có giải pháp phù hợp.
 
 ## Business Consequences
 
-Nếu không thành thạo quản lý đa cụm Kubernetes:
-
-- Tốn nhiều thời gian và chi phí cho quản lý hạ tầng.
-- Khó đảm bảo tính sẵn sàng cao và khả năng mở rộng.
-- Rủi ro bảo mật tăng do thiếu chính sách quản trị.
-- Doanh nghiệp bỏ lỡ cơ hội áp dụng chiến lược cloud-native.
+- Tăng chi phí vận hành do thiếu tự động hóa và tối ưu tài nguyên.
+- Giảm hiệu suất triển khai và thời gian đưa sản phẩm ra thị trường.
+- Tăng rủi ro bảo mật và vi phạm tuân thủ.
+- Giảm khả năng cạnh tranh trong môi trường cloud-native.
 
 ---
 
@@ -72,60 +67,79 @@ Nếu không thành thạo quản lý đa cụm Kubernetes:
 
 ## Architecture Overview
 
-Workshop hướng dẫn triển khai đa cụm Kubernetes theo kiến trúc sau:
-
-- **Cluster API**: Tự động hóa vòng đời cụm trên AWS EKS.
-- **Cilium Cluster Mesh**: Cung cấp mạng liên cụm với chính sách zero-trust.
-- **Karmada**: Quản lý và phân phối khối lượng công việc trên các cụm.
-- **Kyverno**: Áp dụng chính sách bảo mật và quản trị.
-- **AWS EKS**: Chạy các cụm Kubernetes được quản lý.
-- **AWS S3**: Lưu trữ cấu hình và trạng thái Cluster API.
+- **Cluster API**: Tự động hóa vòng đời cụm Kubernetes qua manifest khai báo.            
+- **Argo CD**: Triển khai ứng dụng và hạ tầng theo GitOps.                            
+- **Kind**: Cụm Kubernetes cục bộ dùng làm cụm quản lý.                            
+- **AWS EC2/EKS**: Nơi triển khai các workload cluster.                                   
+- **Git Repository**: Lưu trữ manifest cho cụm và ứng dụng, là nguồn duy nhất cho Argo CD.  
 
 ## AWS Services Used
 
-- **EKS**: Cung cấp cụm Kubernetes được quản lý, tận dụng Free Tier.
-- **EC2**: Chạy management cluster cho Cluster API (`t3.medium`).
-- **S3**: Lưu trữ cấu hình Cluster API và backup trạng thái.
-- **VPC**: Đảm bảo mạng an toàn với các subnet công khai và riêng tư.
-- **IAM**: Quản lý quyền truy cập cho Cluster API và EKS.
+- **Amazon EC2**: Triển khai cụm Kubernetes tùy chỉnh với Cluster API.
+- **Amazon EKS**: Cụm Kubernetes được quản lý, tích hợp với Cluster API.
+- **IAM & CloudFormation**: Cấp quyền cho Cluster API tương tác với AWS.
+- **VPC, Subnet, Security Group**: Cấu hình mạng cho các cụm.
 
 ## Component Design
+### 1. **Management Cluster (Kind)**
 
-- **Management Cluster**: Chạy Cluster API để quản lý các workload clusters.
-- **Workload Clusters**: Chạy ứng dụng (ví dụ: API REST) trên EKS.
-- **Cilium Cluster Mesh**: Kết nối mạng liên cụm, hỗ trợ mTLS.
-- **Karmada**: Đồng bộ tài nguyên (Deployments, Services) trên các cụm.
-- **Kyverno**: Thực thi chính sách (ví dụ: yêu cầu namespace, giới hạn tài nguyên).
-- **S3**: Lưu trữ cấu hình Cluster API và backup.
+- Được khởi tạo cục bộ bằng Kind.
+- Cài đặt Cluster API với provider AWS.
+- Cài đặt Argo CD để điều phối triển khai GitOps.
+
+### 2. **Workload Cluster (EC2 & EKS)**
+
+- EC2: Tạo cụm với manifest YAML, cấu hình số lượng node, SSH key, v.v.
+- EKS: Sử dụng flavor `eks-managedmachinepool` để triển khai node group.
+- Cấu hình autoscaling cho cả EC2 và EKS để tối ưu tài nguyên.
+
+### 3. **Argo CD GitOps Flow**
+
+- Argo CD được cấp quyền `cluster-admin`.
+- Manifest ứng dụng và cụm được lưu trong Git.
+- Argo CD tự động đồng bộ trạng thái từ Git vào cụm.
+
+### 4. **CI/CD cho hạ tầng**
+
+- Mỗi thay đổi trong Git (ví dụ nâng cấp version Kubernetes) sẽ được Argo CD áp dụng tự động.
+- Có thể tích hợp thêm các pipeline CI như GitHub Actions để kiểm tra manifest trước khi merge.
 
 ## Security Architecture
 
-- **Security Groups**:
-  - `eks-sg`: Mở cổng 443 (API Server), 6443 (Cluster API), 22 (SSH, giới hạn IP).
-  - `management-sg`: Giới hạn truy cập từ management cluster.
-- **IAM Roles**:
-  - `EKSClusterRole`: Quyền quản lý EKS.
-  - `CAPIRole`: Quyền truy cập S3 và EKS cho Cluster API.
-- **Kyverno Policies**:
-  - Yêu cầu namespace cho tài nguyên.
-  - Giới hạn tài nguyên CPU/memory.
-  - Kiểm tra image từ registry đáng tin cậy.
-- **Cilium Network Policies**: Áp dụng zero-trust, kiểm soát lưu lượng liên cụm.
+Giải pháp đảm bảo tính bảo mật ở cả cấp độ cụm và ứng dụng thông qua:
+
+- **Quản lý IAM tập trung**: Sử dụng CloudFormation để tạo IAM roles cho Cluster API tương tác với AWS.
+- **Phân quyền Argo CD**: Gán quyền `cluster-admin` cho Argo CD để triển khai tài nguyên một cách có kiểm soát.
+- **RBAC cho Autoscaler**: Cấu hình Role và RoleBinding để giới hạn quyền truy cập của Cluster Autoscaler.
+- **Bảo mật SSH**: Tạo SSH key riêng cho từng vùng triển khai EC2/EKS, tránh dùng chung key.
+- **Kubeconfig bảo mật**: Kubeconfig của EKS được lưu dưới dạng secret trong cụm quản lý, không lộ ra ngoài.
 
 ## Scalability Design
+### Tự động mở rộng cụm
 
-- **Multi-Cluster**: Cluster API hỗ trợ tạo thêm cụm theo nhu cầu.
-- **Karmada**: Phân phối workload thông minh dựa trên tài nguyên.
-- **EKS Auto Scaling**: Mở rộng node theo lưu lượng.
-- **Multi-AZ**: EKS và S3 hỗ trợ Multi-AZ, đảm bảo uptime 99.9%.
+Giải pháp hỗ trợ mở rộng linh hoạt theo nhu cầu thực tế:
 
-## Architecture Diagram
+#### EC2 Cluster
 
-- **Internet Gateway** -> **EKS Management Cluster (Cluster API)** -> **EKS Workload Clusters**.
-- **Cilium Cluster Mesh**: Kết nối mạng giữa các cụm.
-- **Karmada**: Đồng bộ workload.
-- **S3**: Lưu trữ cấu hình.
-- **Kyverno**: Áp dụng chính sách bảo mật.
+- Sử dụng **Cluster Autoscaler** với cấu hình:
+  - Tự động scale từ 1 đến 10 node.
+  - Cân bằng tải và tránh downtime.
+- Triển khai qua Argo CD để đảm bảo đồng bộ với Git.
+
+#### EKS Cluster
+
+- Dùng **Managed Node Group** của AWS:
+  - Cấu hình minSize và maxSize trong manifest.
+  - AWS tự động điều chỉnh số lượng node.
+
+### Nâng cấp cụm
+
+- Cập nhật version Kubernetes trong manifest.
+- Argo CD tự động đồng bộ và triển khai rolling update.
+- Đảm bảo không gián đoạn dịch vụ trong quá trình nâng cấp.
+
+### Architecture Diagram
+![architecture-diagram](./architecture-diagram.png)
 
 ---
 
@@ -133,198 +147,114 @@ Workshop hướng dẫn triển khai đa cụm Kubernetes theo kiến trúc sau:
 
 ## Implementation Phases
 
-Workshop được chia thành các mô-đun thực hành trong một ngày:
+1. **Khởi tạo cụm quản lý**:
+   - Tạo cụm Kind.
+   - Cài đặt Cluster API với provider AWS.
+   - Thiết lập IAM và biến môi trường.
 
-1. **Chuẩn bị hạ tầng**:
-   - Tạo VPC, Security Groups, IAM Roles, và S3 bucket.
-   - Cài đặt AWS CLI, kubectl, clusterctl, và Helm trên máy cục bộ.
+2. **Tạo cụm workload**:
+   - Tạo manifest cho cụm EC2 và EKS.
+   - Cài đặt Argo CD trên cụm quản lý.
+   - Triển khai cụm qua Argo CD bằng manifest kiểu `Application`.
 
-2. **Triển khai Management Cluster**:
-   - Khởi chạy EKS management cluster (`t3.medium`).
-   - Cài đặt Cluster API và các provider (AWS, CAPI).
-
-3. **Tạo Workload Clusters**:
-   - Sử dụng Cluster API để tạo 2 workload clusters trên EKS.
-   - Cấu hình Cilium Cluster Mesh cho giao tiếp liên cụm.
-
-4. **Phân phối Workload**:
-   - Cài đặt Karmada trên management cluster.
-   - Triển khai ứng dụng mẫu (API REST) trên các workload clusters.
-
-5. **Bảo mật và Quản trị**:
-   - Cài đặt Kyverno và áp dụng chính sách bảo mật.
-   - Kiểm tra tuân thủ và giám sát.
-
-6. **Kiểm tra và Xử lý sự cố**:
-   - Kiểm tra giao tiếp liên cụm và workload phân phối.
-   - Giám sát log và xử lý lỗi.
-
-## Technical Requirements
-
-- **Tính toán**: EKS cluster (`t3.medium`, 2 vCPU, 4 GB RAM).
-- **Lưu trữ**: S3 1 GB, EBS 20 GB cho mỗi node.
-- **Mạng**: VPC với 2 subnet công khai (management cluster), 2 subnet riêng (workload clusters).
-- **Phần mềm**: Cluster API, Cilium, Karmada, Kyverno, AWS CLI, kubectl, Helm.
-
-## Development Approach
-
-- **Phương pháp**: Hướng dẫn từng bước với các bài tập thực hành.
-- **Công cụ**: AWS Management Console, clusterctl, Helm, kubectl, Visual Studio Code.
-
-## Testing Strategy
-
-- **Unit Tests**: Kiểm tra cấu hình Cluster API bằng clusterctl.
-- **Integration Tests**: Xác minh giao tiếp liên cụm với Cilium.
-- **Performance Tests**: Kiểm tra thời gian phản hồi API < 200ms với k6.
-- **Security Tests**: Kiểm tra chính sách Kyverno và quét lỗ hổng image.
-
-## Deployment Plan
-
-1. Cài đặt Cluster API và provider AWS trên management cluster.
-2. Tạo workload clusters với clusterctl.
-3. Cài đặt Cilium Cluster Mesh và Karmada.
-4. Áp dụng chính sách Kyverno.
-5. Triển khai ứng dụng mẫu và kiểm tra API.
-
-## Rollback Procedures
-
-- Nếu triển khai thất bại:
-  - Xóa workload cluster: `clusterctl delete`.
-  - Khôi phục từ S3 backup: `aws s3 cp`.
-  - Tái tạo management cluster từ AMI backup.
+3. **Nâng cấp và mở rộng cụm**:
+   - Cập nhật phiên bản Kubernetes trong manifest.
+   - Cấu hình Cluster Autoscaler cho EC2 và EKS.
 
 ---
 
 # 4. Timeline & Milestones
 
-## Project Timeline
-
-- **Thời gian**: 1 ngày
-- **Buổi sáng**:
-  - Giới thiệu và chuẩn bị hạ tầng
-  - Triển khai management cluster
-  - Tạo workload clusters
-- **Buổi chiều**:
-  - Cấu hình Cilium Cluster Mesh và Karmada
-  - Áp dụng chính sách Kyverno
-  - Kiểm tra và tổng kết
-
 ## Key Milestones
 
-1. VPC, Security Groups, và IAM Roles được cấu hình.
-2. Management cluster chạy Cluster API.
-3. Workload clusters được tạo và kết nối qua Cilium.
-4. Karmada phân phối workload thành công.
-5. Kyverno áp dụng chính sách bảo mật.
-
-## Dependencies
-
-- Tài khoản AWS và cặp khóa SSH được chuẩn bị trước.
-- S3 bucket phải được tạo trước khi triển khai Cluster API.
-- EKS management cluster phải sẵn sàng trước khi tạo workload clusters.
-- Security Groups phải được cấu hình đúng.
-
-## Buffer Time
-
-- 30 phút dự phòng cho các vấn đề như lỗi cấu hình hoặc kết nối.
+1. Cụm quản lý Cluster API được khởi tạo.
+2. Cụm EC2 và EKS được triển khai qua Argo CD.
+3. Cluster Autoscaler hoạt động trên các cụm.
+4. Nâng cấp cụm thành công qua GitOps.
 
 ---
 
-# 5. Budget Estimation
+## 5. Budget Estimation
 
-## Infrastructure Costs
+### Infrastructure Costs
 
-- **EKS**: $0.10/giờ x 24 giờ x 30 ngày = $72/tháng (Free Tier: 750 giờ EC2).
-- **EC2 (`t3.medium`)**: $0.0416/giờ x 24 giờ x 30 ngày = $29.95/tháng (Free Tier: 750 giờ).
-- **S3**: Miễn phí trong Free Tier (5 GB).
-- **Tổng**: ~$101.95/tháng, nhưng gần như miễn phí trong Free Tier cho workshop.
+:Thành phần        :Dịch vụ AWS       :Chi phí ước tính |
+|------------------|-------------------|------------------|
+:EKS              :3 nodes `t3.medium` :~$0.37           |
+:EC2              :6 nodes `t3.medium` :~$0.75           |
+:Management EC2   :1 node `t3.medium`  :~$0.12           |
+:S3               :5 GB lưu trữ        :~$0.01           |
+:IAM, VPC         :Included            :~$0.00           |
 
-## Operational Costs
-
-- Quản lý và hỗ trợ: Không đáng kể trong Free Tier.
-
-## ROI Analysis
-
-- **Lợi ích**:
-  - Giảm 70% thời gian quản lý cụm (3 giờ so với 10 giờ).
-  - Tiết kiệm ~60% chi phí so với on-premises ($20K/năm so với $50K/năm).
-  - Nâng cao kỹ năng quản lý đa cụm, tăng khả năng cạnh tranh.
-- **Hoàn vốn**: Kỹ năng học được giúp tối ưu hóa hạ tầng và giảm chi phí trong các dự án thực tế.
+**Tổng chi phí workshop 3 giờ: ~**🟩 **$1.25 USD**
 
 ---
 
-# 6. Risk Assessment
+## 6. Risk Assessment
 
-## Risk Matrix
+### Risk Matrix
 
-| **Rủi ro** | **Tác động** | **Xác suất** | **Giảm thiểu** |
-| --- | --- | --- | --- |
-| Management cluster lỗi | Cao | Thấp | Kiểm tra cấu hình clusterctl, sử dụng AMI backup |
-| Giao tiếp liên cụm thất bại | Cao | Thấp | Kiểm tra Cilium Cluster Mesh, Security Groups |
-| Lỗi chính sách Kyverno | Trung bình | Trung bình | Kiểm tra policy trước khi áp dụng |
-| Thiếu thời gian | Trung bình | Trung bình | Lịch trình linh hoạt, tài liệu bổ sung |
+:Rủi ro                        :Tác động :Xác suất :Giảm thiểu                          |
+|------------------------------|----------|----------|-------------------------------------|
+:Management cluster lỗi       :Cao      :Thấp     :Kiểm tra cấu hình, dùng AMI backup |
+:Giao tiếp liên cụm thất bại  :Cao      :Trung bình :Kiểm tra Cilium và Security Groups |
+:Lỗi chính sách Kyverno       :Trung bình :Trung bình :Áp dụng trước trong môi trường test |
+:Thiếu thời gian triển khai   :Trung bình :Trung bình :Dự phòng 30 phút, tài liệu bổ sung |
 
-## Mitigation Strategies
+### Contingency Plans
 
-- **Management cluster lỗi**: Sử dụng clusterctl validate và S3 backup.
-- **Giao tiếp liên cụm thất bại**: Kiểm tra Security Groups và Cilium policies.
-- **Lỗi chính sách Kyverno**: Áp dụng policy trong môi trường thử nghiệm trước.
-- **Thiếu thời gian**: Cung cấp tài liệu tự học và video hướng dẫn.
-
-## Contingency Plans
-
-- **Management Cluster**: Khôi phục từ AMI backup.
-- **Workload Clusters**: Xóa và tái tạo với clusterctl.
-- **Cilium/Karmada**: Sử dụng cấu hình mẫu từ tài liệu chính thức.
-- **Thời gian**: Tài liệu bổ sung cho các chủ đề nâng cao.
+- **Khôi phục cluster** từ S3 hoặc AMI backup.
+- **Xóa và tái tạo workload clusters** bằng `clusterctl`.
+- **Sử dụng cấu hình mẫu** từ tài liệu chính thức nếu gặp lỗi.
+- **Cung cấp tài liệu tự học** nếu workshop vượt thời lượng.
 
 ---
 
-# 7. Expected Outcomes
+## 7. Expected Outcomes
 
-## Success Metrics
+### Success Metrics
 
-- Người tham gia triển khai thành công management cluster và workload clusters.
-- Giao tiếp liên cụm hoạt động ổn định với Cilium Cluster Mesh.
-- Karmada phân phối workload hiệu quả, API phản hồi dưới 200ms.
-- Kyverno áp dụng chính sách bảo mật thành công.
+- Cụm quản lý và workload được triển khai thành công.
+- Argo CD đồng bộ hóa trạng thái cụm và ứng dụng.
+- Cilium Cluster Mesh hoạt động ổn định giữa các cụm.
+- Kyverno áp dụng chính sách bảo mật đúng như kỳ vọng.
+- API phản hồi < 200ms trong bài test hiệu năng.
 
-## Business Benefits
+### Business Benefits
 
-- **Ngắn hạn (0-6 tháng)**: Tự động hóa quản lý cụm, giảm lỗi cấu hình.
-- **Trung hạn (6-18 tháng)**: Tiết kiệm chi phí, hỗ trợ mở rộng với EKS.
-- **Dài hạn (18+ tháng)**: Tăng khả năng cạnh tranh với chiến lược multi-cluster.
+- **Ngắn hạn (0–6 tháng)**: Tự động hóa quản lý cụm, giảm lỗi cấu hình.
+- **Trung hạn (6–18 tháng)**: Tối ưu chi phí, hỗ trợ mở rộng linh hoạt.
+- **Dài hạn (18+ tháng)**: Tăng khả năng cạnh tranh với chiến lược cloud-native.
 
-## Technical Improvements
+### Technical Improvements
 
-- Thành thạo Cluster API, Cilium, Karmada, và Kyverno.
-- Hiểu cách quản lý đa cụm Kubernetes trên AWS.
-- Áp dụng các phương pháp bảo mật và tối ưu hóa chi phí.
+- Thành thạo Cluster API, Argo CD, Cilium, Karmada, Kyverno.
+- Hiểu rõ kiến trúc đa cụm và cách triển khai GitOps.
+- Áp dụng chính sách bảo mật và autoscaling hiệu quả.
 
-## Long-term Value
+### Long-term Value
 
-- Người tham gia áp dụng kỹ năng vào các dự án cloud-native.
-- Doanh nghiệp hưởng lợi từ hệ thống đa cụm đáng tin cậy, chi phí thấp.
+- Người tham gia có thể áp dụng vào dự án thực tế.
+- Doanh nghiệp xây dựng được nền tảng Kubernetes đa cụm đáng tin cậy, tiết kiệm chi phí.
 
 ---
 
 # Appendices
 
 ## A. Technical Specifications
-
-- **EKS**: Kubernetes 1.31, `t3.medium` nodes.
-- **S3**: Bucket `cluster-api-config`, 1 GB.
+- **EC2 Cluster**: 3 control plane nodes + 3 worker nodes (`t3.medium`)  
+- **EKS Cluster**: Kubernetes v1.31, sử dụng flavor `eks-managedmachinepool`
 - **Cluster API**: Phiên bản mới nhất, provider AWS.
-- **Cilium**: Cluster Mesh, phiên bản mới nhất.
-- **Karmada**: Phiên bản mới nhất.
-- **Kyverno**: Phiên bản mới nhất.
+- **Argo CD**: Cài đặt trên cụm quản lý (Kind), cấp quyền `cluster-admin` 
+
 
 ## B. Cost Calculations
+| Hạng mục              | Chi phí ước tính     |
+|------------------------|----------------------|
+| **AWS EC2 Instances**  | ~$1.00 cho 3h sử dụng `t3.medium` |
+| **EKS Cluster**        | ~$0.25 cho 3h sử dụng node group nhỏ |
+| **Tổng cộng**          | **~$1.25** cho toàn bộ workshop |
 
-- **EKS**: $72/tháng (Free Tier: 750 giờ EC2).
-- **EC2**: $29.95/tháng (Free Tier: 750 giờ).
-- **S3**: Miễn phí trong Free Tier (5 GB).
-- **Chuẩn bị workshop**: $500 (one-time).
 
 ## C. Architecture Diagrams
 
@@ -332,9 +262,9 @@ Workshop được chia thành các mô-đun thực hành trong một ngày:
 
 ## D. References
 
-- Cluster API Documentation.
-- Cilium Cluster Mesh Documentation.
-- Karmada Documentation.
-- Kyverno Documentation.
-- AWS EKS Documentation.
-- Gartner 2025 Cloud-Native Report.
+- [Cluster API Documentation](https://cluster-api.sigs.k8s.io/)
+- [AWS EKS Documentation](https://docs.aws.amazon.com/eks/)
+- [Argo CD Documentation](https://argo-cd.readthedocs.io/)
+- [Docker Documentation](https://docs.docker.com/)
+- [Kind Documentation](https://kind.sigs.k8s.io/)
+- [Kubernetes Documentation](https://kubernetes.io/docs/home/)
