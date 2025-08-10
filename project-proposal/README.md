@@ -178,13 +178,13 @@ Giải pháp hỗ trợ mở rộng linh hoạt theo nhu cầu thực tế:
 
 ### Infrastructure Costs
 
-:Thành phần        :Dịch vụ AWS       :Chi phí ước tính |
+| Thành phần        | Dịch vụ AWS       | Chi phí ước tính |
 |------------------|-------------------|------------------|
-:EKS              :3 nodes `t3.medium` :~$0.37           |
-:EC2              :6 nodes `t3.medium` :~$0.75           |
-:Management EC2   :1 node `t3.medium`  :~$0.12           |
-:S3               :5 GB lưu trữ        :~$0.01           |
-:IAM, VPC         :Included            :~$0.00           |
+| EKS              | 3 nodes `t3.medium` | ~$0.37           |
+| EC2              | 6 nodes `t3.medium` | ~$0.75           |
+| Management EC2   | 1 node `t3.medium`  | ~$0.12           |
+| IAM, VPC         | Included            | ~$0.00           |
+
 
 **Tổng chi phí workshop 3 giờ: ~**🟩 **$1.25 USD**
 
@@ -194,12 +194,13 @@ Giải pháp hỗ trợ mở rộng linh hoạt theo nhu cầu thực tế:
 
 ### Risk Matrix
 
-:Rủi ro                        :Tác động :Xác suất :Giảm thiểu                          |
-|------------------------------|----------|----------|-------------------------------------|
-:Management cluster lỗi       :Cao      :Thấp     :Kiểm tra cấu hình, dùng AMI backup |
-:Giao tiếp liên cụm thất bại  :Cao      :Trung bình :Kiểm tra Cilium và Security Groups |
-:Lỗi chính sách Kyverno       :Trung bình :Trung bình :Áp dụng trước trong môi trường test |
-:Thiếu thời gian triển khai   :Trung bình :Trung bình :Dự phòng 30 phút, tài liệu bổ sung |
+| Rủi ro                        | Tác động     | Xác suất     | Giảm thiểu                                      |
+|------------------------------|--------------|--------------|-------------------------------------------------|
+| Management cluster lỗi       | Cao          | Thấp         | Kiểm tra cấu hình, dùng AMI backup              |
+| Giao tiếp liên cụm thất bại  | Cao          | Trung bình   | Kiểm tra Cilium và Security Groups              |
+| Lỗi chính sách Kyverno       | Trung bình   | Trung bình   | Áp dụng trước trong môi trường test             |
+| Thiếu thời gian triển khai   | Trung bình   | Trung bình   | Dự phòng 30 phút, chuẩn bị tài liệu bổ sung     |
+
 
 ### Contingency Plans
 
